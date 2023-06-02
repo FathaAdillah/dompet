@@ -15,7 +15,7 @@
                             </form>
                             <?= $this->pagination->create_links();?>
                             <h6>Results : <?=$total_rows?></h6>
-                                <table class="table table-bordered" id="donaturTable" width="100%" cellspacing="0">
+                                <table class="table table-bordered table-hover" id="donaturTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
                                             <th>#</th>
