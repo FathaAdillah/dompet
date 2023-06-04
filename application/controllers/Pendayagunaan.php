@@ -16,6 +16,7 @@ class Pendayagunaan extends CI_Controller
     {
         $data['user'] = $this->db->get_where('user', ['email' =>
         $this->session->userdata('email')])->row_array();
+        $this->load->library('form_validation');
         $this->load->model('Pendayagunaan_model');
         
 
@@ -75,10 +76,30 @@ class Pendayagunaan extends CI_Controller
         $data['total'] = $this->Pendayagunaan_model->query_jumlah();
          
 
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/sidebar', $data);
-        $this->load->view('templates/topbar', $data);
-        $this->load->view('pendayagunaan/index', $data);
-        $this->load->view('templates/footer');
+        $this->form_validation->set_rules('tanggal', 'Tanggal', 'required');
+        $this->form_validation->set_rules('kategori', 'Kategori', 'required');
+        $this->form_validation->set_rules('penerima_manfaat', 'Penerima Manfaat', 'required');
+        $this->form_validation->set_rules('jumlah', 'Jumlah', 'required');
+        $this->form_validation->set_rules('link_dokumentasi', 'link Dokumentasi', 'required');
+        $this->form_validation->set_rules('berita_acara', 'Berita Acara', 'required');
+        if($this->form_validation->run() == false) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/topbar', $data);
+            $this->load->view('pendayagunaan/index', $data);
+            $this->load->view('templates/footer');
+        } else {
+            $data = [
+                'tanggal' => ($this->input->post('tanggal', true)),
+                'kategori' => ($this->input->post('kategori', true)),
+                'penerima_manfaat' => ($this->input->post('penerima_manfaat',true)),
+                'jumlah' => ($this->input->post('jumlah', true)),
+                'link_dokumentasi' => ($this->input->post('link_dokumentasi', true)),
+                'berita_acara' => ($this->input->post('berita_acara', true)),
+            ];
+            $this->db->insert('pendayagunaan', $data);
+            redirect('pendayagunaan');
+        }
     }
+
 }
