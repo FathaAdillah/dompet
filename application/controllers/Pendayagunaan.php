@@ -6,6 +6,7 @@ class Pendayagunaan extends CI_Controller
 
     public function __construct()
     {
+        // Pengecekan session user
         parent::__construct();
         if(!$this->session->userdata('email')){
             redirect('auth');
@@ -14,29 +15,29 @@ class Pendayagunaan extends CI_Controller
 
     public function index()
     {
+        // Memanggil session user
         $data['user'] = $this->db->get_where('user', ['email' =>
         $this->session->userdata('email')])->row_array();
-        $this->load->library('form_validation');
+
+        // Memanggil Model
         $this->load->model('Pendayagunaan_model');
         
-
+        // Fitur Search
         if($this->input->post('submit')) {
             $data['keyword'] = $this->input->post('keyword');
             $this->session->set_userdata('keyword', $data['keyword']);
         } else {
             $data['keyword'] = $this->session->userdata('keyword');
         }
-
-        $this->load->library('pagination');
-
-        $config['base_url'] = 'http://localhost/dompet/pendayagunaan/index';
-
         $this->db->like('berita_acara', $data['keyword']);
         $this->db->or_like('kategori', $data['keyword']);
         $this->db->from('pendayagunaan');
 
-        $config['total_rows'] = $this->db->count_all_results();
+        // Fitur Pagination
+        $this->load->library('pagination');
         $data['total_rows'] = $config['total_rows'];
+        $config['base_url'] = 'http://localhost/dompet/pendayagunaan/index';
+        $config['total_rows'] = $this->db->count_all_results();
         $config['per_page'] = 5;
 
         $config['full_tag_open'] = '<nav aria-label="Page navigation example"><ul class="pagination justify-content-center">';
@@ -71,11 +72,14 @@ class Pendayagunaan extends CI_Controller
 
         $data['pendayagunaan'] = $this->Pendayagunaan_model->TampilPendayagunaan($config['per_page'], $data['start'], $data['keyword']);
        
-
+        // View Title
         $data['title'] = 'Halaman Pendayagunaan';
-        $data['total'] = $this->Pendayagunaan_model->query_jumlah();
+        
+        // Fitur Total
+        $data['total'] = $this->Pendayagunaan_model->query_jumlah_pendayagunaan();
          
-
+        // Fitur Input Data
+        $this->load->library('form_validation');
         $this->form_validation->set_rules('tanggal', 'Tanggal', 'required');
         $this->form_validation->set_rules('kategori', 'Kategori', 'required');
         $this->form_validation->set_rules('penerima_manfaat', 'Penerima Manfaat', 'required');

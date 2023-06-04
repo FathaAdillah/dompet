@@ -123,7 +123,7 @@
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                        <th>Tanggal</th>
+                                            <th>Tanggal</th>
                                             <th>Berita Acara</th>
                                             <th>Kategori</th>
                                             <th>Penerima Manfaat</th>
