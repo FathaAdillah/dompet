@@ -26,4 +26,9 @@ public function TampilPendayagunaan($limit,$start, $keyword = null) {
 public function countAllPendayagunaan() {
   return $this->db->get('pendayagunaan')->num_rows();
 }
+
+public function getPendayagunaanById($id) { 
+  return $this->db->get_where('pendayagunaan', ['id' => $id])-> row_array();
+}
+
 }

@@ -35,9 +35,10 @@ class Pendayagunaan extends CI_Controller
 
         // Fitur Pagination
         $this->load->library('pagination');
-        $data['total_rows'] = $config['total_rows'];
+        
         $config['base_url'] = 'http://localhost/dompet/pendayagunaan/index';
         $config['total_rows'] = $this->db->count_all_results();
+        $data['total_rows'] = $config['total_rows'];
         $config['per_page'] = 5;
 
         $config['full_tag_open'] = '<nav aria-label="Page navigation example"><ul class="pagination justify-content-center">';
@@ -70,13 +71,14 @@ class Pendayagunaan extends CI_Controller
         $data['start'] = $this->uri->segment(3);
         $this->pagination->initialize($config);
 
-        $data['pendayagunaan'] = $this->Pendayagunaan_model->TampilPendayagunaan($config['per_page'], $data['start'], $data['keyword']);
+        $data['pendayagunaan'] = $this->Pendayagunaan_model->TampilPendayagunaan($config['per_page'], $data['start'], $data['keyword'] );
        
         // View Title
         $data['title'] = 'Halaman Pendayagunaan';
         
         // Fitur Total
         $data['total'] = $this->Pendayagunaan_model->query_jumlah_pendayagunaan();
+        
          
         // Fitur Input Data
         $this->load->library('form_validation');
@@ -105,5 +107,34 @@ class Pendayagunaan extends CI_Controller
             redirect('pendayagunaan');
         }
     }
-
+    
+// Fitur Edit
+        public function ubah($id) {
+        $this->load->library('form_validation');
+        $data = $this->Pendayagunaan_model->getPendayagunaanById($id);
+        $this->form_validation->set_rules('tanggal', 'Tanggal', 'required');
+        $this->form_validation->set_rules('kategori', 'Kategori', 'required');
+        $this->form_validation->set_rules('penerima_manfaat', 'Penerima Manfaat', 'required');
+        $this->form_validation->set_rules('jumlah', 'Jumlah', 'required');
+        $this->form_validation->set_rules('link_dokumentasi', 'link Dokumentasi', 'required');
+        $this->form_validation->set_rules('berita_acara', 'Berita Acara', 'required');
+        if($this->form_validation->run() == false) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/topbar', $data);
+            $this->load->view('pendayagunaan/ubah', $data);
+            $this->load->view('templates/footer');
+        } else {
+            $data = [
+                'tanggal' => ($this->input->post('tanggal', true)),
+                'kategori' => ($this->input->post('kategori', true)),
+                'penerima_manfaat' => ($this->input->post('penerima_manfaat',true)),
+                'jumlah' => ($this->input->post('jumlah', true)),
+                'link_dokumentasi' => ($this->input->post('link_dokumentasi', true)),
+                'berita_acara' => ($this->input->post('berita_acara', true)),
+            ];
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->update('pendayagunaan', $data);
+        }
+    }
 }
