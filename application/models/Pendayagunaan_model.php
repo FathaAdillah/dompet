@@ -31,4 +31,18 @@ public function getPendayagunaanById($id) {
   return $this->db->get_where('pendayagunaan', ['id' => $id])-> row_array();
 }
 
+public function ubahPendayagunaan()
+    {
+      $data = [
+        'tanggal' => ($this->input->post('tanggal', true)),
+        'kategori' => ($this->input->post('kategori', true)),
+        'penerima_manfaat' => ($this->input->post('penerima_manfaat',true)),
+        'jumlah' => ($this->input->post('jumlah', true)),
+        'link_dokumentasi' => ($this->input->post('link_dokumentasi', true)),
+        'berita_acara' => ($this->input->post('berita_acara', true)),
+    ];
+        $this->db->where('id', $this->input->post('id'));
+        $this->db->update('pendayagunaan', $data);
+    }
+
 }

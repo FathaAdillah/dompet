@@ -68,6 +68,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                     <button type="submit" name="tambah" class="btn btn-primary">Submit</button>
@@ -114,16 +115,16 @@
                                                 <a href="" class="btn btn-warning dropdown-toggle" id="dropdownButton" data-toggle="dropdown">Action</a>
                                                 <div class="dropdown-menu animated--fade-in"
                                                     aria-labelledby="dropdownButton">
-                                                    <a class="dropdown-item" data-toggle="modal" href="#editPendayagunaan">Edit</a>
+                                                    <a class="dropdown-item" data-toggle="modal" data-target="#editPendayagunaan<?=$p['id'];?>" href="<?=$p['id'];?>" >Edit</a>
                                                     <a class="dropdown-item" href="#">Delete</a>
                                                 </div>
                                             </td>
                                             
                                         </tr>
-                                        <?php endforeach; ?>
+                                        
                                         <!-- Edit -->
-                                        <?php foreach($pendayagunaan as $g) :  ?>
-                                    <div class="modal fade" id="editPendayagunaan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+                                    <div class="modal fade" id="editPendayagunaan<?=$p['id'];?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
                                         <div class="modal-header">
@@ -138,10 +139,11 @@
                                     <div class="container-fluid">
                                         <div class="form-group row">
                                             <div class="col-md-6">
+                                            <input id="id" name="id" value="<?=$p['id']; ?>" type="hidden" class="" autocomplete="off">
                                                 <div class="form-group">
                                                     <label for="tanggal">Tanggal</label>
                                                     <div class="input-group">
-                                                        <input type="text" value="" name="tanggal" class="form-control" data-provide="datepicker" placeholder="yyyy/mm/dd" data-date-format="yyyy-mm-dd" id="tanggal" autocomplete="off">
+                                                        <input type="text" value="<?=$p['tanggal']; ?>" name="tanggal" class="form-control" data-provide="datepicker" placeholder="yyyy/mm/dd" data-date-format="yyyy-mm-dd" id="tanggal" autocomplete="off">
                                                         <div class="input-group-prepend">
                                                         <div class="input-group-text"><i class="fas fa-fw fa-calendar"></i></div>
                                                     </div>
@@ -153,32 +155,33 @@
                                                 <div class="form-group">
                                                     <label for="kategori">Kategori</label>
                                                     <select class="form-control" name="kategori" id="kategori" autocomplete="off">
-                                                        <option selected>Choose...</option>
-                                                        <option value="Ekonomi">Ekonomi</option>
-                                                        <option value="Kesehatan">Kesehatan</option>
-                                                        <option value="Pendidikan">Pendidikan</option>
-                                                        <option value="Dakwah">Dakwah</option>
-                                                        <option value="Sosial">Sosial</option>
+                                                        <?php foreach ($kategori as $k): ?>
+                                                        <?php if( $k == $pendayagunaan['kategori'] ) : ?>
+                                                            <option value="<?= $k; ?>" selected><?= $j; ?></option>
+                                                            <?php else : ?>
+                                                                <option value="<?= $k; ?>"><?= $k; ?></option>
+                                                            <?php endif; ?>
+                                                        <?php endforeach; ?>
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="penerima_manfaat">Penerima Manfaat</label>
-                                                    <input type="text" class="form-control" name="penerima_manfaat" id="penerima_manfaat" placeholder="0 Orang" autocomplete="off">
+                                                    <input type="text" class="form-control" value="<?=$p['penerima_manfaat']; ?>" name="penerima_manfaat" id="penerima_manfaat" placeholder="0 Orang" autocomplete="off">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 ml-auto">
                                                 <div class="form-group">
                                                     <label for="jumlah">Jumlah</label>
-                                                    <input id="jumlah" name="jumlah" type="text" class="form-control input-number"  placeholder="Rp 0,000" autocomplete="off">
+                                                    <input id="jumlah" name="jumlah" value="<?=$p['jumlah']; ?>" type="text" class="form-control input-number"  placeholder="Rp 0,000" autocomplete="off">
                                                     <script>$('.input-number').number( true, 2 );</script>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="link_dokumentasi">Link Dokumentasi</label>
-                                                    <input type="text" name="link_dokumentasi" class="form-control" id="link_dokumentasi" placeholder="Link" autocomplete="off">
+                                                    <input type="text" name="link_dokumentasi" value="<?=$p['link_dokumentasi']; ?>" class="form-control" id="link_dokumentasi" placeholder="Link" autocomplete="off">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="berita_acara">Berita Acara</label>
-                                                    <textarea type="text" name="berita_acara" class="form-control" id="berita_acara" placeholder=""></textarea>
+                                                    <textarea type="text" name="berita_acara"  class="form-control" id="berita_acara" placeholder=""><?=$p['berita_acara']; ?></textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -186,15 +189,12 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="submit" name="tambah" class="btn btn-primary">Submit</button>
+                                    <button type="submit" name="ubah" class="btn btn-primary">Submit</button>
                                 </div>
                                 </form>
                                 </div>
                             </div>
-                        </div>
-
-
-                                        <?php endforeach; ?>
+                        </div><?php endforeach; ?>
                                     </tbody>
                                     <tfoot>
                                         <tr>
