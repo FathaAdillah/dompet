@@ -76,6 +76,9 @@ class Pendayagunaan extends CI_Controller
         // View Title
         $data['title'] = 'Halaman Pendayagunaan';
 
+        $data['bulan'] = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember', 'Bulan'];
+        $data['kategori'] = ['Choose', 'Ekonomi', 'Kesehatan', 'Pendidikan', 'Dakwah', 'Sosial'];
+
         // Fitur Total
         $data['total'] = $this->Pendayagunaan_model->query_jumlah_pendayagunaan();
         $this->load->view('templates/header', $data);

@@ -1,8 +1,7 @@
 <div class="container-fluid">
         <h1 class="h3 mb-4 text-gray-800"><?= $title; ?></h1>
             <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            
+                        <div class="card-header py-3">   
                         <h6 class="m-0 font-weight-bold text-primary">Data Pendayagunaan</h6>
                         </div>
                         <div class="card-body">
@@ -77,35 +76,37 @@
                                 </div>
                             </div>
                         </div>
-
-
-                        <form action="<?= base_url('Pendayagunaan');?>" method="post">
-                            <div class="float-right form-inline">
-                                <h6>Search :</h6>
-                            <input type="text" class="form-control form-control-sm ml-2 mb-2" placeholder="search keyword..." autocomplete="off" name="keyword">
-                            <input class="btn btn-primary btn-sm ml-1 mb-2" type="submit" name="submit">
+                        <br>
+                        <form action="<?= base_url('Pendayagunaan');?>" class="d-sm-inline-block float-right" method="post">
+                        <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Search Keyword..." autocomplete="off" name="keyword">
+                            <div class="input-group-append">
+                                <input class="btn btn-outline-primary" type="submit" id="button-addon2" name="submit">
                             </div>
-                        </form> 
+                        </div>
+                        </form>
+                        
                         <div class="table table-responsive">
                         <?= $this->pagination->create_links();?>
                         <h6>Results : <?=$total_rows?></h6>
                                 <table class="table table-bordered table-hover" id="" width="150%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th width="110px">Tanggal</th>
+                                            <th width="120px">Tanggal</th>
                                             <th>Berita Acara</th>
                                             <th>Kategori</th>
                                             <th width="100px">Penerima Manfaat</th>
                                             <th width="170px">Jumlah</th>
-                                            <th width="50px">Link Dokumentasi</th>
+                                            <th>Link Dokumentasi</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php foreach ($pendayagunaan as $p) :?>
                                         <tr>
-                                            
-                                            <td><?= $p['tanggal']; ?></td>
+                                            <?php $date= $p['tanggal'];
+                                             $newDate = date('d M Y', strtotime($date));?>
+                                            <td><?= $newDate;?></td>
                                             <td><?= $p['berita_acara']; ?></td>
                                             <td><?= $p['kategori']; ?></td>
                                             <td><?= $p['penerima_manfaat']; ?> Orang</td>
@@ -157,7 +158,7 @@
                                                     <select class="form-control" name="kategori" id="kategori" autocomplete="off">
                                                         <?php foreach ($kategori as $k): ?>
                                                         <?php if( $k == $pendayagunaan['kategori'] ) : ?>
-                                                            <option value="<?= $k; ?>" selected><?= $j; ?></option>
+                                                            <option value="<?= $k; ?>" selected><?= $k; ?></option>
                                                             <?php else : ?>
                                                                 <option value="<?= $k; ?>"><?= $k; ?></option>
                                                             <?php endif; ?>
@@ -209,10 +210,37 @@
                                     </tfoot>
                                 </table> 
                             </div>
-                            <div class="float-right">
+                          
+                        </div>
+                        </div>
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">   
+                            <h6 class="m-0 font-weight-bold text-primary">Fitur Total Pendayagunaan</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="float-left d-inline-flex">
+                                    <div class="form-group mr-2">
+                                        <select class="form-control" id="exampleFormControlSelect1">
+                                        <?php foreach( $bulan as $b ) : ?>
+                                                <option value="<?= $b; ?>" selected><?= $b; ?></option>
+                                        <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                    <div class="form-group mr-2">
+                                        <?php
+                                            $now=date('Y');
+                                            echo "<select class='form-control' id='exampleFormControlSelect1' name=’tahun’>";
+                                            for ($a=2020;$a<=$now;$a++)
+                                            {
+                                                echo "<option value='$a'>$a</option>";
+                                            }
+                                            echo "</select>";
+                                            ?> 
+                                    </div>  
+                                </div>
+                                <a class="btn btn-primary">Submit</a>
+                                <div class="float-right">
                                 <b>Total : Rp <?= number_format($total,0,","); ?></b>
                             </div>
-                        </div>
-                        </div>
             </div>
         </div>
