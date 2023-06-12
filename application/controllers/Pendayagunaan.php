@@ -11,6 +11,7 @@ class Pendayagunaan extends CI_Controller
         if (!$this->session->userdata('email')) {
             redirect('auth');
         }
+        $this->load->model('Pendayagunaan_model');
     }
 
     public function index()
@@ -145,10 +146,11 @@ class Pendayagunaan extends CI_Controller
                 redirect('pendayagunaan');
             }
         };
-        // Fitur Input Data
-
-
-       
+    
     }
+    public function hapus()
+{
+    $this->Pendayagunaan_model->delete($id);
+    redirect('pendayagunaan');
+  }
 }
-// Fitur Edit

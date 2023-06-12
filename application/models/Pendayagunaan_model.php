@@ -44,5 +44,10 @@ public function ubahPendayagunaan()
         $this->db->where('id', $this->input->post('id'));
         $this->db->update('pendayagunaan', $data);
     }
+    public function delete()
+  {
+     $this->db->where('id', $this->uri->segment(3));
+     $this->db->delete('pendayagunaan');
+  }
 
 }
