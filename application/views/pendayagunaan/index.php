@@ -83,7 +83,7 @@
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" placeholder="Search Keyword..." autocomplete="off" name="keyword">
                     <div class="input-group-append">
-                        <input class="btn btn-outline-primary" type="submit" id="button-addon2" name="submit">
+                        <input class="btn btn-primary" type="submit" id="button-addon2" name="submit">
                     </div>
                 </div>
             </form>
